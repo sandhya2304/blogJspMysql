@@ -7,27 +7,191 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Insert title here</title>
+<title>My Blog</title>
 
 <!-- css -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" 
     integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-<link href="css/mystyle.css" rel="stylesheet" type="text/css" />
+    
+    <!-- custom css -->
+    <link href="css/mystyle.css" rel="stylesheet" type="text/css" />
+   
+    <!-- font awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    
+    <!-- clip path -->
+    <style>
+      
+      .banner-background{
+         clip-path: polygon(30% 0%, 70% 0%, 100% 0, 98% 74%, 86% 93%, 61% 84%, 1% 100%, 0 0);
+      }
+    
+    </style>
 
 </head>
 <body>
 
-<h1> Hello </h1>
+ <!-- Navbar starts -->
+ 
+   <%@include file="Navbar.jsp" %>
+ 
+ <!-- Navbar Ends -->
+ 
+ <!-- banner -->
+ 
+ <div class="container-fluid p-0 m-0">
+ 
+    <div class="jumbotron primary-background banner-background">
+     <div class="container">
+      
+       <h3 class="display-3">Technical Blog</h3>
+       <p>
+          Learning technology with new ways!!
+          A programming language is a formal language comprising a set of strings that produce various kinds of machine code output. 
+          Programming languages are used in computer programming to implement algorithms. Most programming languages consist of 
+          instructions for computers.
+       </p>
+       
+       <button class="btn btn-primary btn-lg text-white">
+        <span class="fa fa-external-link"></span>
+          Starts its free
+       </button>
+       
+       &nbsp;
+       
+         <a href="Login.jsp" class="btn btn-success btn-lg text-white" >
+           <span class="fa fa-user-plus "></span>
+          Login
+       </a>
+       
+       </div>
+    </div>
+    
+    <br/>
+    
+   
+ </div>
+ 
+ 
+ 
+    
+  <div class="container">
+     
+      <div class="row mb-2">
+      
+         <div class="col-md-4">
 
-<%
-Connection con = ConnectionProvider.getConnection();
-out.println("my con..."+con);
-%>
+                <!-- card   -->
 
-<h2> Started This project</h2>
+				<div class="card">
+					
+					<div class="card-body">
+						<h5 class="card-title">Java Programming </h5>
+						<p class="card-text">Some quick example text to build on the
+							card title and make up the bulk of the card's content.</p>
+						<a href="#" class="btn primary-background text-white">Read More</a>
+					</div>
+				</div>
 
+			</div>
+			
+			 <div class="col-md-4">
 
+                <!-- card   -->
 
+				<div class="card">
+					
+					<div class="card-body">
+						<h5 class="card-title">Java Programming </h5>
+						<p class="card-text">Some quick example text to build on the
+							card title and make up the bulk of the card's content.</p>
+						<a href="#" class="btn primary-background text-white">Read More</a>
+					</div>
+				</div>
+
+			</div>
+      
+      
+      
+         <div class="col-md-4">
+
+                <!-- card   -->
+
+				<div class="card">
+					
+					<div class="card-body">
+						<h5 class="card-title">Java Programming </h5>
+						<p class="card-text">Some quick example text to build on the
+							card title and make up the bulk of the card's content.</p>
+						<a href="#" class="btn primary-background text-white">Read More</a>
+					</div>
+				</div>
+
+			</div>
+      
+      
+      </div>
+      
+      <!-- second Row -->
+      
+      <div class="row">
+      
+         <div class="col-md-4">
+
+                <!-- card   -->
+
+				<div class="card">
+					
+					<div class="card-body">
+						<h5 class="card-title">Java Programming </h5>
+						<p class="card-text">Some quick example text to build on the
+							card title and make up the bulk of the card's content.</p>
+						<a href="#" class="btn primary-background text-white">Read More</a>
+					</div>
+				</div>
+
+			</div>
+			
+			 <div class="col-md-4">
+
+                <!-- card   -->
+
+				<div class="card">
+					
+					<div class="card-body">
+						<h5 class="card-title">Java Programming </h5>
+						<p class="card-text">Some quick example text to build on the
+							card title and make up the bulk of the card's content.</p>
+						<a href="#" class="btn primary-background text-white">Read More</a>
+					</div>
+				</div>
+
+			</div>
+      
+      
+      
+         <div class="col-md-4">
+
+                <!-- card   -->
+
+				<div class="card">
+					
+					<div class="card-body">
+						<h5 class="card-title">Java Programming </h5>
+						<p class="card-text">Some quick example text to build on the
+							card title and make up the bulk of the card's content.</p>
+						<a href="#" class="btn primary-background text-white">Read More</a>
+					</div>
+				</div>
+
+			</div>
+      
+      
+      </div>
+    
+  </div>
+ 
+ 
 
 <!-- Javascript -->
 
