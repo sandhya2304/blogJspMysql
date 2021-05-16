@@ -35,17 +35,19 @@
              
              <div class="card-body">
 
-					<form>
+					<form action="RegisterServlet" method="post">
 					
 					<div class="form-group">
 							<label for="user_name">User Name</label> 
-							<input type="text" class="form-control" id="user_name"
+							<input name="user_name"
+							 type="text" class="form-control" id="user_name"
 								 placeholder="Enter user name">
 							
 						</div>
 					
 						<div class="form-group">
-							<label for="exampleInputEmail1">Email address</label> <input
+							<label for="exampleInputEmail1">Email address</label> 
+							<input name="user_email"
 								type="email" class="form-control" id="exampleInputEmail1"
 								aria-describedby="emailHelp" placeholder="Enter email">
 							<small id="emailHelp" class="form-text text-muted">We'll
@@ -54,13 +56,13 @@
 						
 						<div class="form-group">
 							<label for="exampleInputPassword1">Password</label> <input
-								type="password" class="form-control" id="exampleInputPassword1" />
+							name="user_password"	type="password" class="form-control" id="exampleInputPassword1" />
 							
 						</div>
 						
 						<div class="form-group">
 						 
-						   <textarea rows="5" cols="20" name="about" class="form-control" 	placeholder="Enter Something About Yourself..."></textarea>
+						   <textarea  rows="5" cols="20" name="about" class="form-control" 	placeholder="Enter Something About Yourself..."></textarea>
 						 
 						</div>
 						
@@ -68,16 +70,16 @@
 							   	<label for="gender">Select Gender :</label><br/>
 							   	<input
 								type="radio"  id="gender"
-								name="gender"> Male
+								name="gender" value="male"> Male
 									<input
 								type="radio"  id="gender"
-								name="gender"> Female
+								name="gender" value="female"> Female
 							   	
 						   </div>
 						
 						
 						<div class="form-check">
-							<input type="checkbox" class="form-check-input"
+							<input name="check" type="checkbox" class="form-check-input"
 								id="exampleCheck1"> <label class="form-check-label"
 								for="exampleCheck1">Agree Terms and condition</label>
 						</div>
