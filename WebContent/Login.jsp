@@ -1,4 +1,5 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<%@page import="com.techblog.entities.Message"%>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
@@ -44,6 +45,32 @@
                   Login
                </p>
             </div>
+            
+            <%
+                
+            Message ms = (Message)session.getAttribute("msg");
+            if(ms!=null){
+            	
+            	  %>
+            	  
+            	     
+            <div class="alert <%= ms.getCssClass() %>" role="alert">
+               
+               <%= ms.getContent() %>
+               
+            
+            </div>
+            
+            	  
+            	  <%
+            	  
+            	  session.removeAttribute("msg");
+            	
+            }
+            
+            %>
+         
+            
             <div class="card-body">
 
 						<form action="LoginServlet" method="post">
