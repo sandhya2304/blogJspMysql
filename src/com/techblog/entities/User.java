@@ -12,6 +12,7 @@ public class User
 	private String gender;
 	private Timestamp dateTime;
 	private String about;
+	private String profile;
 	
 	
 	public User() {
@@ -39,6 +40,14 @@ public class User
 		this.gender = gender;
 		
 		this.about = about;
+	}
+	
+	public String getProfile() {
+		return profile;
+	}
+	
+	public void setProfile(String profile) {
+		this.profile = profile;
 	}
 
 

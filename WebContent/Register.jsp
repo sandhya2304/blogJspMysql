@@ -35,7 +35,7 @@
              
              <div class="card-body">
 
-					<form action="RegisterServlet" method="post">
+					<form action="RegisterServlet" method="post" id="reg-form">
 					
 					<div class="form-group">
 							<label for="user_name">User Name</label> 
@@ -85,8 +85,11 @@
 						</div>
 						
 						<br/>
-						
-						<button type="submit" class="btn btn-primary">Submit</button>
+						<div class="container text-center" id="loader" style="display:none;">
+						<span class="fa fa-refresh fa-2x"></span>
+						<h4>Please Wait...</h4>
+						</div>
+						<button type="submit" id="submit-btn" class="btn btn-primary">Submit</button>
 					</form>
 
 				</div>
@@ -115,6 +118,80 @@
 
 <!-- my js -->
 <script src="js/myjs.js" type="text/javascript"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js">
+
+</script>
+
+
+<script>
+
+  $(document).ready(function(){
+	  
+	  console.log("loaddedd,,,,,...")
+	  
+	  $('#reg-form').on('submit',function(event){
+		  event.preventDefault();
+		  
+		  let form  = new FormData(this);
+		  
+		  $('#submit-btn').hide();
+		  $('#loader').show();
+		  
+		  
+		  
+		  //send register servlet
+		  
+		  $.ajax({
+			  url: "RegisterServlet",
+			  type: 'post',
+			  data: form,
+			  success: function(data,textStatus,jqXHR){
+				  console.log(data)
+				  
+				  $('#submit-btn').show();
+				  $('#loader').hide();
+				  
+				  
+				  if(data.trim() == 'done')
+					  {
+				  
+				  swal("Register succefully redirect to login page..")
+				  .then((value) => {
+				      window.location="Login.jsp"
+				  });
+				} else{
+					swal(data);
+				}
+			  },
+			  error: function(jqXHR,textStatus,errorThrown){
+				  console.log(data)
+				  
+				   $('#submit-btn').show();
+				  $('#loader').hide();
+				  
+				  
+				  swal("Register failed..");
+				 
+			  },
+			  processData: false,
+			  contentType: false
+			  
+		  })
+		  
+	  })
+	  
+  })
+
+
+
+
+</script>
+
+
+
+
+
 
 </body>
 </html>
