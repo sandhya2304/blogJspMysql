@@ -3,6 +3,8 @@ package com.techblog.helper;
 import java.sql.*;
 
 
+
+//singleton class
 public class ConnectionProvider
 {
 	

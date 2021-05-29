@@ -1,5 +1,5 @@
 
-
+<%@page import="com.techblog.entities.Message"%>
 <%@page import="com.techblog.entities.User"%>
 <%@page errorPage="Error.jsp" %>
 
@@ -107,6 +107,38 @@ if(user == null){
  
  <!-- Navbar ends -->
  
+    <%
+                
+            Message ms = (Message)session.getAttribute("msg");
+            if(ms!=null){
+            	
+            	  %>
+            	  
+            	     
+            <div class="alert <%= ms.getCssClass() %>" role="alert">
+               
+               <%= ms.getContent() %>
+               
+            
+            </div>
+            
+           
+           
+           <!-- Logout  -->  	  
+            <%
+            	  
+            	  session.removeAttribute("msg");
+            	
+            }
+            
+            %>
+ 
+ 
+ 
+ 
+ 
+ 
+ 
  <!-- modal start -->
  
  
@@ -176,7 +208,7 @@ if(user == null){
          
           <h3 class="mt-3">Please Edit carefully...</h3>
          
-           <form action="UpdateServlet" method="post">
+           <form action="UpdateServlet" method="post" enctype="multipart/form-data">
              
              <table class="table">
                 <tr>
@@ -240,7 +272,7 @@ if(user == null){
                        New Profile Pic
                    </td>
                    <td>
-                     <input type="file" name="profile" class="form-controle" value="<%= user.getProfile() %>"/> 
+                     <input type="file" name="image" class="form-control"/> 
                    </td>
                 </tr>
              

@@ -61,8 +61,10 @@
             
             </div>
             
-            	  
-            	  <%
+           
+           
+           <!-- Logout  -->  	  
+            <%
             	  
             	  session.removeAttribute("msg");
             	
