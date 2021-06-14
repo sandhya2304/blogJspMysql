@@ -1,4 +1,10 @@
 
+<%@page import="com.techblog.entities.Post"%>
+<%@page import="java.util.List"%>
+<%@page import="com.techblog.entities.Category"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="com.techblog.helper.ConnectionProvider"%>
+<%@page import="com.techblog.dao.PostDao"%>
 <%@page import="com.techblog.entities.Message"%>
 <%@page import="com.techblog.entities.User"%>
 <%@page errorPage="Error.jsp" %>
@@ -60,16 +66,16 @@ if(user == null){
 
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
+     
       <li class="nav-item active">
         <a class="nav-link" href="#"><i class="fa fa-bell-o"></i>
         <span>Learning with Sandhuya <span class="sr-only">(current)</span></a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#"><span><i class="fa fa-user-o"></i></span>Contact</a>
-      </li>
+     
+   
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-         <span><i class="fa fa-check-square-o"></i></span> Catgeories
+         <span><i class="fa fa-check-square-o"></i></span> Categories
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
           <a class="dropdown-item" href="#">Programming</a>
@@ -80,6 +86,15 @@ if(user == null){
       </li>
       
     
+       <li class="nav-item">
+        <a class="nav-link" href="#"><span><i class="fa fa-user-o"></i></span>Contact</a>
+      </li>
+      
+      <li class="nav-item">
+        <a class="nav-link" href="#" data-toggle="modal" data-target="#add-post-modal"><span><i class="fa fa-asterisk"></i></span>Do Post</a>
+      </li>
+      
+     
     
       
     </ul>
@@ -136,10 +151,83 @@ if(user == null){
  
  
  
+ <!-- main body of page -->
+ 
+      <main>
+      
+           <div class="container">
+               
+               <div class="row mt-4">
+               
+                 <!-- first col -->
+                  
+                   <div class="col-md-4">
+                        <!-- categories -->
+                
+                <div class="list-group">
+                  <a href="#" class="list-group-item list-group-item-action active">
+                      All Posts
+                  </a>
+                 <!-- Catgeories -->
+                 
+                  <%
+                
+                 PostDao dao1 = new PostDao(ConnectionProvider.getConnection());
+                 List<Category> list2  = dao1.allCategories();
+                 for(Category cat : list2)
+                 {
+                %>
+                
+                  
+               <a href="#" class="list-group-item list-group-item-action">
+                      <%= cat.getcName() %>
+               </a>
+                
+                
+                
+                <%
+                
+                 }
+                %>
+                 
+                 
+                 
+               </div>
+                         
+               
+                   </div>
+                   
+                    <!-- second col -->
+                    <div class="col-md-8" >
+                        <!-- posts -->
+                        
+                          <div class="container text-center" id="loader" >
+                              <i class="fa fa-refresh fa-3x"></i>
+                              <h3 class="mt-3">Loading... </h3>
+                          </div>
+                          
+                          <div class="container-fluid" id="post-container">
+                          
+                          
+                          </div>
+               
+                    </div>
+               
+               
+               
+               </div>
+           
+           
+           
+           </div>
+      
+      </main>
  
  
+  <!-- end body of page -->
  
- <!-- modal start -->
+ 
+ <!-- modal start Profile -->
  
  
 
@@ -302,7 +390,94 @@ if(user == null){
   </div>
 </div>
 
-<!-- ends modal -->
+<!-- ends modal profile -->
+ 
+ 
+ <!-- Add post Modal -->
+ 
+ 
+<!-- Modal -->
+<div class="modal fade" id="add-post-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">
+            Provide the Post Detail
+        </h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+     
+     
+         
+         <form action="AddPostServlet" method="post" id="addPostForm">
+         
+            <div class="form-group"> 
+              <select class="form-control" name="cid">
+                <option selected="selected" disabled="disabled">--Select Category--</option>
+                <%
+                
+                 PostDao dao = new PostDao(ConnectionProvider.getConnection());
+                 List<Category> list  = dao.allCategories();
+                 for(Category cat : list)
+                 {
+                %>
+                
+                  
+                <option value="<%= cat.getCid() %>" ><%= cat.getcName() %></option>
+                
+                <%
+                
+                 }
+                %>
+                
+              
+              </select>
+           </div>
+         
+         
+         
+            <div class="form-group">
+              <input name="pTitle" type="text" placeholder="Enter the Title..." class="form-control" />
+            </div>
+            
+            <div class="form-group">
+             <textarea name="pContent" class="form-control" placeholder="Enter the Content" style="height: 200px;" ></textarea>            
+            </div>
+            
+            <div class="form-group">
+             <textarea name="pCode" class="form-control" placeholder="Enter the Program(if any)" style="height: 200px;" ></textarea>            
+            </div>
+            
+            <div class="form-group">
+            <label>Select Pic </label><br>
+              <input type="file" name="pic"  />       
+            </div>
+            
+            <div class="container text-center">
+            
+               <button type="submit" class="btn btn-primary">
+                   Post
+               </button>
+            </div>
+            
+         
+         </form>
+      
+      
+      </div>
+      
+     
+      
+    </div>
+  </div>
+</div>
+ 
+
+ 
+ <!-- end post modal -->
  
  
  
@@ -317,6 +492,9 @@ if(user == null){
 
 <!-- my js -->
 <script src="js/myjs.js" type="text/javascript"></script>
+
+<!-- sweet alert cdn -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js" ></script>
 
 
 <!-- Edit Jquery btn  -->
@@ -346,13 +524,76 @@ if(user == null){
 				  
 				  $(this).text("Edit");
 		    }
-	  })	  
+	  })	   
+  });
+</script>
+
+
+<!-- add Post javascript -->
+
+<script>
+
+
+  $(document).ready(function(e){
+	  
+	 $("#addPostForm").on("submit",function(event){
+		 
+		 event.preventDefault();
+		 console.log("submit...");
+		 
+		 let form = new FormData(this);
+		 
+		 $.ajax({
+	            url: "AddPostServlet",
+	            type: "POST",
+	            data:  form,
+	            contentType: false,
+	            cache: false,
+	            processData:false,
+	            success: function(data){
+	                console.log(data);
+	                if(data.trim()){
+	                	swal("Good job!", "Saved Posts !", "success");
+	                }else{
+	                	swal("Error!", "Something went wrong !", "warning");
+	                }
+	            },
+	            error: function(){
+	            	swal("Error!", "Something went wrong from error !", "danger");
+	            }           
+	        })
+		 
+	 })
 	  
   });
 
+</script>
+
+
+<!-- load posts using ajax -->
+
+<script>
+
+     $(document).ready(function(e){
+ 
+       $.ajax({
+    	   url: 'Load_Posts.jsp',
+    	   success: function (data,status,xhr) { 
+    		   
+    		   console.log(data);
+    		   $('#loader').hide();
+    		   
+    		   $('#post-container').html(data);
+    	   }
+       })
+
+     });
 
 
 </script>
+
+
+
 
 
 

@@ -49,4 +49,14 @@
     <servlet-name>UpdateServlet</servlet-name>
     <url-pattern>/UpdateServlet</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>AddPostServlet</display-name>
+    <servlet-name>AddPostServlet</servlet-name>
+    <servlet-class>com.techblog.servlets.AddPostServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>AddPostServlet</servlet-name>
+    <url-pattern>/AddPostServlet</url-pattern>
+  </servlet-mapping>
 </web-app>
