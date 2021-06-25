@@ -99,6 +99,7 @@ public class PostDao
 		try
 		{
 			
+			// showing error in this code
 			String query = "select * from posts where catId = ?";
 			PreparedStatement ps = this.conn.prepareStatement(query);
 			ps.setInt(1, catId);

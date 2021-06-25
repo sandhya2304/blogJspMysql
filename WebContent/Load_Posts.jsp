@@ -1,6 +1,4 @@
 
-
-
 <%@page import="java.util.List"%>
 <%@page import="com.techblog.entities.Post"%>
 <%@page import="com.techblog.helper.ConnectionProvider"%>
@@ -11,8 +9,29 @@
 
 <%
 
+
+Thread.sleep(50);
  PostDao pDao = new PostDao(ConnectionProvider.getConnection());
- List<Post> list = pDao.allPosts(); 
+
+ int cid = Integer.parseInt(request.getParameter("cid"));
+ 
+ List<Post> list = null;
+ 
+ if(cid  == 0)
+ {
+
+    list = pDao.allPosts(); 
+ 
+ }else{
+	 list = pDao.allPosts(cid);
+ }
+ 
+ 
+ if(list.size() == 0)
+ {
+	 System.out.println("<h1>No posts... </h1>");
+	 return; 
+ }
  
  for(Post pp : list)
  
@@ -24,7 +43,7 @@
 
     <div class="card  mt-2">
     
-     <img src="blogpid/<%= pp.getpPic() %>" class="card-img-top" alt="post pic">
+     <img src="blogpic/<%= pp.getpPic() %>" class="card-img-top" alt="post pic">
       
         <div class="card-body">
            <b><%= pp.getpTitle() %></b>

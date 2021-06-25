@@ -165,7 +165,8 @@ if(user == null){
                         <!-- categories -->
                 
                 <div class="list-group">
-                  <a href="#" class="list-group-item list-group-item-action active">
+                
+                  <a href="#" oncClick="getPosts(0,this)" class="c-link list-group-item list-group-item-action active">
                       All Posts
                   </a>
                  <!-- Catgeories -->
@@ -179,7 +180,7 @@ if(user == null){
                 %>
                 
                   
-               <a href="#" class="list-group-item list-group-item-action">
+               <a href="#" onClick="getPosts(<%= cat.getCid() %>,this)"  class="c-link list-group-item list-group-item-action">
                       <%= cat.getcName() %>
                </a>
                 
@@ -574,18 +575,37 @@ if(user == null){
 
 <script>
 
-     $(document).ready(function(e){
- 
-       $.ajax({
+
+   function getPosts(catId,temp){
+	   
+	   $("#loader").show();
+	   $('#post-container').hide();
+	   
+	   $('.c-link').removeClass('active');
+	   
+	   
+	   $.ajax({
     	   url: 'Load_Posts.jsp',
+    	   data : {cid : catId},
     	   success: function (data,status,xhr) { 
     		   
     		   console.log(data);
     		   $('#loader').hide();
     		   
+    		   $('#post-container').show();
+    		   
     		   $('#post-container').html(data);
+    		   $(temp).addClass('active');
     	   }
        })
+	   
+   }
+
+     $(document).ready(function(e){
+    	 
+    	 //let allPostRef = $('.c-link')[0]
+          
+    	 getPosts(0);
 
      });
 
