@@ -20,10 +20,6 @@ public class PostDao
 		this.conn = conn;
 	}
 
-
-
-
-
 	public ArrayList<Category> allCategories()
 	{
 		ArrayList<Category> list = new ArrayList<Category>();
@@ -100,11 +96,11 @@ public class PostDao
 		{
 			
 			// showing error in this code
-			String query = "select * from posts where catId = ?";
-			PreparedStatement ps = this.conn.prepareStatement(query);
+			String query = "select * from posts where catId=?";
+			PreparedStatement ps = conn.prepareStatement(query);
 			ps.setInt(1, catId);
 			
-			ResultSet rs = ps.executeQuery(query);
+			ResultSet rs = ps.executeQuery();
 			while(rs.next())
 			{
 				int pid = rs.getInt("pid");
@@ -170,7 +166,41 @@ public class PostDao
 		}
 		
 	
-	
+		public Post getPostByPostId(int pid)
+		{
+			Post pp = null;
+			
+			try
+			{
+				
+				String q = "select * from posts where pid = ?";
+				PreparedStatement ps = conn.prepareStatement(q);
+				ps.setInt(1, pid);
+				
+				ResultSet rs = ps.executeQuery();
+				while(rs.next())
+				{
+					 pp = new Post();
+					
+					String pTitle = rs.getString("pTitle");
+					String pContent = rs.getString("pContent");
+					String pCode = rs.getString("pCode");
+					String pPic = rs.getString("pPic");
+					Timestamp pDate = rs.getTimestamp("pDate"); 
+					int catId = rs.getInt("catId");
+					int userid = rs.getInt("userId");
+					
+					pp = new Post(pid, pTitle, pContent, pCode, pPic, pDate, catId, userid);
+										
+				}				
+				
+			}catch(Exception e)
+			{
+				e.printStackTrace();
+			}
+			return pp;
+						
+		}
 	
 	
 	

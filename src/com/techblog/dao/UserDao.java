@@ -113,9 +113,49 @@ public class UserDao
 	}
 	
 	
+	//get user by post id
 	
-	
-	
+	public User getUserbyPostId(int id)
+	{
+	     
+		User user = null;
+		
+		try
+		{
+			String query = "select * from user where id = ?";
+			PreparedStatement ps = conn.prepareStatement(query);
+			ps.setInt(1, id);
+			
+			ResultSet rs = ps.executeQuery();
+			while(rs.next())
+			{
+				
+                user = new User();
+				
+				//data from db
+				String name = rs.getString("name");
+				user.setName(name);
+				user.setId(rs.getInt("id"));
+				user.setEmail(rs.getString("email"));
+				user.setPassword(rs.getString("password"));
+				user.setGender(rs.getString("gender"));
+				user.setAbout(rs.getString("about"));
+				user.setDateTime(rs.getTimestamp("rdate"));
+				user.setProfile(rs.getString("profile"));
+
+				
+			}
+			
+			
+			
+		}catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+		
+		
+		return user;
+	}
 	
 	
 	

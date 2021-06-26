@@ -1,22 +1,47 @@
-
-<%@page import="com.techblog.entities.Post"%>
-<%@page import="java.util.List"%>
+<%@page import="java.text.DateFormat"%>
+<%@page import="com.techblog.dao.UserDao"%>
 <%@page import="com.techblog.entities.Category"%>
-<%@page import="java.util.ArrayList"%>
+<%@page import="java.util.List"%>
 <%@page import="com.techblog.helper.ConnectionProvider"%>
 <%@page import="com.techblog.dao.PostDao"%>
-<%@page import="com.techblog.entities.Message"%>
+<%@page import="com.techblog.entities.Post"%>
 <%@page import="com.techblog.entities.User"%>
 <%@page errorPage="Error.jsp" %>
 
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+
+
+<%
+
+ User user = (User)session.getAttribute("currentuser");
+
+if(user == null){
+	response.sendRedirect("Login.jsp");
+}
+
+%>
+
+<%
+   
+     int pid = Integer.parseInt(request.getParameter("id"));
+     
+     PostDao pDao = new PostDao(ConnectionProvider.getConnection());
+
+     Post post = pDao.getPostByPostId(pid);
+     
+     UserDao userDao = new UserDao(ConnectionProvider.getConnection());
+     User user1 = userDao.getUserbyPostId(post.getpId());
+     
+
+%>
+
+
+
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>My Blog</title>
 
 <!-- css -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" 
@@ -34,6 +59,27 @@
       .banner-background{
          clip-path: polygon(30% 0%, 70% 0%, 100% 0, 98% 74%, 86% 93%, 61% 84%, 1% 100%, 0 0);
       }
+      
+      .post-title{
+          font-weight: 100;
+          font-size: 30px;
+      }
+      .post-content{
+          font-weight: 100;
+          font-size: 25px;
+       }
+       .post-username{
+          font-size: 20px;
+          font-weight: 100;
+       }
+       .post-date{
+           font-style: italic;
+           font-weight: bold;
+       }
+       .row-user{
+          border: 1px solid grey;
+          padding-top: 15px;
+       }
        body{
        
         background: url(pics/back.jpg);
@@ -41,29 +87,19 @@
         background-attachment: fixed;
        }
        
+       
     
     </style>
-
+<title><%= post.getpTitle() %></title>
 </head>
 <body>
-
-<%
-
- User user = (User)session.getAttribute("currentuser");
-
-if(user == null){
-	response.sendRedirect("Login.jsp");
-}
-
-%>
-
 <div class="container my-5">
 
 <!-- navbar Starts -->
 
 
 
-   <nav class="navbar navbar-expand-lg navbar-dark primary-background fixed-top ">
+   <nav class="navbar navbar-expand-lg navbar-dark primary-background fixed-top">
   <a class="navbar-brand" href="index.jsp">
    <span><i style="font-size:24px" class="fa">&#xf069;</i>
    </span>
@@ -77,7 +113,7 @@ if(user == null){
     <ul class="navbar-nav mr-auto">
      
       <li class="nav-item active">
-        <a class="nav-link" href="#"><i class="fa fa-bell-o"></i>
+        <a class="nav-link" href="Profile.jsp"><i class="fa fa-bell-o"></i>
         <span>Learning with Sandhuya <span class="sr-only">(current)</span></a>
       </li>
      
@@ -131,116 +167,107 @@ if(user == null){
  
  <!-- Navbar ends -->
  
-    <%
-                
-            Message ms = (Message)session.getAttribute("msg");
-            if(ms!=null){
-            	
-            	  %>
-            	  
-            	     
-            <div class="alert <%= ms.getCssClass() %>" role="alert">
+ 
+ <!-- content of show blog starts -->
+ 
+ 
+   <div class="container">
+   
+       <div class="row my-4">
+       
+         <div class="col-md-8 offest-md-2">
+             
+            <div class="card text-center ">
                
-               <%= ms.getContent() %>
-               
-            
-            </div>
-            
-           
-           
-           <!-- Logout  -->  	  
-            <%
-            	  
-            	  session.removeAttribute("msg");
-            	
-            }
-            
-            %>
- 
- 
- 
- 
- <!-- main body of page -->
- 
-      <main>
-      
-           <div class="container">
-               
-               <div class="row mt-4">
-               
-                 <!-- first col -->
+                <div class="card-header ">
                   
-                   <div class="col-md-4">
-                        <!-- categories -->
-                
-                <div class="list-group">
-                
-                  <a href="#" oncClick="getPosts(0,this)" class="c-link list-group-item list-group-item-action active">
-                      All Posts
-                  </a>
-                 <!-- Catgeories -->
+                  <h3 class="post-title">
+                     <%= post.getpTitle() %> 
+                  </h3>
                  
-                  <%
+                </div>
                 
-                 PostDao dao1 = new PostDao(ConnectionProvider.getConnection());
-                 List<Category> list2  = dao1.allCategories();
-                 for(Category cat : list2)
-                 {
-                %>
-                
+                  <div class="card-body">
                   
-               <a href="#" onClick="getPosts(<%= cat.getCid() %>,this)"  class="c-link list-group-item list-group-item-action">
-                      <%= cat.getcName() %>
-               </a>
-                
-                
-                
-                <%
-                
-                 }
-                %>
-                 
-                 
-                 
-               </div>
-                         
-               
+                   <img alt="pic" src="blogpic/<%= post.getpPic() %>" width="100%" />
+                   
+                   
+                    <div class="row my-3 row-user">
+                   
+                       <div class="col-md-8">
+                       
+                          <p align="left" class="post-username">
+                           <a href="#!">
+                             <%= user1.getName() %>
+                           </a> has posted : 
+                          </p>
+                       
+                       </div>
+                       <div class="col-md-4">
+                       
+                          <p class="post-date">  
+                            <%= DateFormat.getDateTimeInstance().format(post.getpDate()) %> 
+                          </p>
+                       
+                       </div>
+                   
+                   
                    </div>
                    
-                    <!-- second col -->
-                    <div class="col-md-8" >
-                        <!-- posts -->
-                        
-                          <div class="container text-center" id="loader" >
-                              <i class="fa fa-refresh fa-3x"></i>
-                              <h3 class="mt-3">Loading... </h3>
-                          </div>
-                          
-                          <div class="container-fluid" id="post-container">
-                          
-                          
-                          </div>
-               
-                    </div>
-               
-               
-               
-               </div>
-           
-           
-           
-           </div>
-      
-      </main>
+                   
+                   <hr/>
+                   
+                  
+                  
+                    <p class="post-content"> <%= post.getpContent() %>  </p>
+                    
+                    <hr/>
+                    
+                    <br/>
+                    <br/>
+                    
+                   <div class="post-code">
+                       <pre> <%= post.getpCode()%>  </pre>
+                   </div>   
+                                 
+                  </div>
+                  
+                   <div class="card-footer primary-background text-center">
+         
+        
+
+           <a href="#!" class="btn bg-light">
+              <i class="fa fa-thumbs-o-up"></i>
+              <span>24</span>
+          </a>  
+          
+          
+          <a href="#!" class="btn bg-light">
+              <i class="fa fa-commenting-o"></i>
+              <span>7</span>
+          </a>  
+                
+        </div>
+            
+            
+            
+            </div>
+         
+         
+         </div>
+       
+       
+       
+       </div>
+   
+   
+   </div>
  
  
-  <!-- end body of page -->
- 
+ <!-- content of show blog ends -->
  
  <!-- modal start Profile -->
  
- 
-
 <!-- Modal -->
 <div class="modal fade" id="profile-Modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
@@ -385,11 +412,7 @@ if(user == null){
            </form>
          
          </div>
-         
-         
-         
-         
-          
+            
          </div>   
       </div>
       <div class="modal-footer">
@@ -401,9 +424,8 @@ if(user == null){
 </div>
 
 <!-- ends modal profile -->
- 
- 
- <!-- Add post Modal -->
+
+<!-- Add post Modal -->
  
  
 <!-- Modal -->
@@ -484,8 +506,8 @@ if(user == null){
     </div>
   </div>
 </div>
-</div> 
-
+ 
+</div>
  
  <!-- end post modal -->
  
@@ -620,8 +642,6 @@ if(user == null){
 
 
 </script>
-
-
 
 
 

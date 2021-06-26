@@ -5,12 +5,14 @@
 <%@page import="com.techblog.dao.PostDao"%>
 
 
+
+ 
 <div class="row">
 
 <%
 
 
-Thread.sleep(50);
+Thread.sleep(500);
  PostDao pDao = new PostDao(ConnectionProvider.getConnection());
 
  int cid = Integer.parseInt(request.getParameter("cid"));
@@ -43,14 +45,41 @@ Thread.sleep(50);
 
     <div class="card  mt-2">
     
+     <div class="card-header">
+     
+     
+     </div>
+    
      <img src="blogpic/<%= pp.getpPic() %>" class="card-img-top" alt="post pic">
       
         <div class="card-body">
            <b><%= pp.getpTitle() %></b>
+           
+               <hr/>
+           
            <p> <%= pp.getpContent() %> </p>
            <pre> <%= pp.getpCode() %> </pre>
         </div>
-    
+        <div class="card-footer primary-background text-center">
+         
+        
+
+           <a href="#!" class="btn bg-light">
+              <i class="fa fa-thumbs-o-up"></i>
+              <span>24</span>
+          </a>  
+          
+            <a href="show-blog-posts.jsp?id=<%= pp.getpId() %>" class="btn bg-light">
+              Read More...
+           </a>
+          
+          <a href="#!" class="btn bg-light">
+              <i class="fa fa-commenting-o"></i>
+              <span>7</span>
+          </a>  
+                
+        </div>
+
     
     </div>
 
