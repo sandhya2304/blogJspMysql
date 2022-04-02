@@ -12,7 +12,7 @@
 <%
 
 
-Thread.sleep(500);
+ Thread.sleep(500);
  PostDao pDao = new PostDao(ConnectionProvider.getConnection());
 
  int cid = Integer.parseInt(request.getParameter("cid"));
