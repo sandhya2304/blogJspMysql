@@ -1,3 +1,4 @@
+<%@page import="com.techblog.dao.LikeDao"%>
 <%@page import="java.text.DateFormat"%>
 <%@page import="com.techblog.dao.UserDao"%>
 <%@page import="com.techblog.entities.Category"%>
@@ -11,7 +12,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-
+<script src="myjs.js"></script>
 
 <%
 
@@ -235,10 +236,23 @@ if(user == null){
                    <div class="card-footer primary-background text-center">
          
         
-
-           <a href="#!" class="btn bg-light">
+           <!-- like button     -->
+           
+           <%
+           
+             LikeDao ldao = new LikeDao(ConnectionProvider.getConnection());
+            // int count = ldao.countLikeOnPosts(post.getpId());
+           
+           %>
+           
+           
+           <a href="#!" class="btn bg-light" onclick="doLike(<%= post.getpId()%>,<%= user1.getId()%>)">
               <i class="fa fa-thumbs-o-up"></i>
-              <span>24</span>
+              <span class="like-span">
+              
+                <%= ldao.countLikeOnPosts(post.getpId()) %>
+              
+              </span>
           </a>  
           
           

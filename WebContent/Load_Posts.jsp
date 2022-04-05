@@ -1,4 +1,6 @@
 
+<%@page import="com.techblog.entities.User"%>
+<%@page import="com.techblog.dao.LikeDao"%>
 <%@page import="java.util.List"%>
 <%@page import="com.techblog.entities.Post"%>
 <%@page import="com.techblog.helper.ConnectionProvider"%>
@@ -62,11 +64,26 @@
         </div>
         <div class="card-footer primary-background text-center">
          
-        
+          
+           <%
+           
+           
+             User uu = (User)session.getAttribute("currentuser");
+             LikeDao ldao = new LikeDao(ConnectionProvider.getConnection());
+            // int count = ldao.countLikeOnPosts(post.getpId());
+           
+           %>
+           
 
-           <a href="#!" class="btn bg-light">
+           <a href="#!" 
+              onclick="doLike(<%= pp.getpId()%>,<%= uu.getId()%>)"
+              class="btn bg-light">
               <i class="fa fa-thumbs-o-up"></i>
-              <span>24</span>
+              <span class="like-span">
+               
+               <%= ldao.countLikeOnPosts(pp.getpId()) %>
+              
+              </span>
           </a>  
           
             <a href="show-blog-posts.jsp?id=<%= pp.getpId() %>" class="btn bg-light">
